@@ -202,7 +202,8 @@ impossible with any but the <code class="docutils literal notranslate"><span cla
 <p class="admonition-title">Note</p>
 <p>Parallelization is getting added to existing analysis classes.  Initially,
 only <a class="reference internal" href="rms.html#MDAnalysis.analysis.rms.RMSD" title="MDAnalysis.analysis.rms.RMSD"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDAnalysis.analysis.rms.RMSD</span></code></a> supports parallel analysis, but
-we aim to increase support in future releases.</p>
+we aim to increase support in future releases. Please check issues labeled
+<cite>parallelization</cite> on the <a class="reference external" href="https://github.com/MDAnalysis/mdanalysis/issues?q=is%3Aopen+is%3Aissue+label%3Aparallelization">MDAnalysis issues tracker</a>.</p>
 </div>
 </section>
 <section id="how-does-parallelization-work">
@@ -254,6 +255,11 @@ remote instance, since the executed code is the same in both cases.</p>
 <a class="reference internal" href="base.html#MDAnalysis.analysis.base.AnalysisBase._conclude" title="MDAnalysis.analysis.base.AnalysisBase._conclude"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_conclude()</span></code></a>. You also have to
 denote if your analysis can run in parallel by following the steps under
 <a class="reference internal" href="#adding-parallelization"><span class="std std-ref">Adding parallelization to your own analysis class</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Attributes that are the same for the whole trajectory, should be defined
+in <cite>__init__</cite> method because they need to be consistent across all workers.</p>
+</div>
 </section>
 <section id="for-mdanalysis-developers">
 <h4><span class="section-number">4.2.4.2.2.2. </span>For MDAnalysis developers<a class="headerlink" href="#for-mdanalysis-developers" title="Link to this heading"></a></h4>

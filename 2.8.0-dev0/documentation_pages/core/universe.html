@@ -864,7 +864,7 @@ the input SMILES string; coordinates are included if
 
 <dl class="py method">
 <dt class="sig sig-object py" id="MDAnalysis.core.universe.Universe.guess_TopologyAttrs">
-<span class="sig-name descname"><span class="pre">guess_TopologyAttrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_guess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_guess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/MDAnalysis/core/universe.html#Universe.guess_TopologyAttrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MDAnalysis.core.universe.Universe.guess_TopologyAttrs" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">guess_TopologyAttrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_guess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_guess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_if_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/MDAnalysis/core/universe.html#Universe.guess_TopologyAttrs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#MDAnalysis.core.universe.Universe.guess_TopologyAttrs" title="Link to this definition"></a></dt>
 <dd><p>Guess and add attributes through a specific context-aware guesser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -886,6 +886,11 @@ using <code class="docutils literal notranslate"><span class="pre">to_guess</spa
 TopologyAttr does not already exist in the Universe, this has no
 effect. If the TopologyAttr does already exist, all values will
 be overwritten by guessed values.</p></li>
+<li><p><strong>error_if_missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If <cite>True</cite>, raise an error if the guesser cannot guess the attribute
+due to missing TopologyAttrs used as the inputs for guessing.
+If <cite>False</cite>, a warning will be raised instead.
+Errors will always be raised if an attribute is in the
+<code class="docutils literal notranslate"><span class="pre">force_guess</span></code> list, even if this parameter is set to False.</p></li>
 <li><p><strong>**kwargs</strong> (<em>extra arguments to be passed to the guesser class</em>)</p></li>
 </ul>
 </dd>

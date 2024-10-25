@@ -167,7 +167,8 @@ Having such guessers makes attribute guessing more accurate and reliable than ha
 <h3><span class="section-number">6.1.1. </span>Default behavior<a class="headerlink" href="#default-behavior" title="Link to this heading"></a></h3>
 <p>By default, MDAnalysis will guess the “mass” and “type” (atom type) attributes for all particles in the Universe
 using the <a class="reference internal" href="guesser_modules/default_guesser.html#MDAnalysis.guesser.default_guesser.DefaultGuesser" title="MDAnalysis.guesser.default_guesser.DefaultGuesser"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultGuesser</span></code></a> at the time of Universe creation,
-if they are not read from the input file.
+if they are not read from the input file. If the required information is not present in the input file,
+a warning will be raised.
 Please see the <a class="reference internal" href="guesser_modules/default_guesser.html#MDAnalysis.guesser.default_guesser.DefaultGuesser" title="MDAnalysis.guesser.default_guesser.DefaultGuesser"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultGuesser</span></code></a> for more information.</p>
 </section>
 <section id="guessing-using-guess-topologyattrs-api">

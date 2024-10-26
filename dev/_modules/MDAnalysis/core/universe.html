@@ -379,9 +379,24 @@
 <span class="sd">        Once Universe has been loaded, attempt to guess the connectivity</span>
 <span class="sd">        between atoms.  This will populate the .bonds, .angles, and .dihedrals</span>
 <span class="sd">        attributes of the Universe.</span>
+
+<span class="sd">        .. deprecated:: 2.8.0</span>
+<span class="sd">           This keyword is deprecated and will be removed in MDAnalysis 3.0.</span>
+<span class="sd">           Please pass (&quot;bonds&quot;, &quot;angles&quot;, &quot;dihedrals&quot;) into</span>
+<span class="sd">           `to_guess` or `force_guess` instead to guess bonds, angles,</span>
+<span class="sd">           and dihedrals respectively.</span>
+
 <span class="sd">    vdwradii: dict, ``None``, default ``None``</span>
 <span class="sd">        For use with *guess_bonds*. Supply a dict giving a vdwradii for each</span>
 <span class="sd">        atom type which are used in guessing bonds.</span>
+
+<span class="sd">        .. deprecated:: 2.8.0</span>
+<span class="sd">           This keyword is deprecated and will be removed in MDAnalysis 3.0.</span>
+<span class="sd">           Please pass it into Guesser creation (:mod:`~MDAnalysis.guesser`),</span>
+<span class="sd">           or to :meth:`~MDAnalysis.core.universe.Universe.guess_TopologyAttrs`</span>
+<span class="sd">           method instead. If passed into `guess_TopologyAttrs`, it will</span>
+<span class="sd">           override the values set during Guesser creation.</span>
+
 <span class="sd">    context: str or :mod:`Guesser&lt;MDAnalysis.guesser&gt;`, default ``&#39;default&#39;``</span>
 <span class="sd">        Type of the Guesser to be used in guessing TopologyAttrs</span>
 <span class="sd">    to_guess: list[str] (optional, default ``[&#39;types&#39;, &#39;masses&#39;]``)</span>
@@ -404,8 +419,25 @@
 <span class="sd">    fudge_factor: float, default [0.55]</span>
 <span class="sd">        For use with *guess_bonds*. Supply the factor by which atoms must</span>
 <span class="sd">        overlap each other to be considered a bond.</span>
+
+<span class="sd">        .. deprecated:: 2.8.0</span>
+<span class="sd">           This keyword is deprecated and will be removed in MDAnalysis 3.0.</span>
+<span class="sd">           Please pass it into Guesser creation (:mod:`~MDAnalysis.guesser`),</span>
+<span class="sd">           or to :meth:`~MDAnalysis.core.universe.Universe.guess_TopologyAttrs`</span>
+<span class="sd">           method instead. If passed into `guess_TopologyAttrs`, it will</span>
+<span class="sd">           override the values set during Guesser creation.</span>
+
 <span class="sd">    lower_bound: float, default [0.1]</span>
 <span class="sd">        For use with *guess_bonds*. Supply the minimum bond length.</span>
+
+<span class="sd">        .. deprecated:: 2.8.0</span>
+<span class="sd">           This keyword is deprecated and will be removed in MDAnalysis 3.0.</span>
+<span class="sd">           Please pass it into Guesser creation (:mod:`~MDAnalysis.guesser`),</span>
+<span class="sd">           or to :meth:`~MDAnalysis.core.universe.Universe.guess_TopologyAttrs`</span>
+<span class="sd">           method instead. If passed into `guess_TopologyAttrs`, it will</span>
+<span class="sd">           override the values set during Guesser creation.</span>
+
+<span class="sd">           </span>
 <span class="sd">    transformations: function or list, ``None``, default ``None``</span>
 <span class="sd">        Provide a list of transformations that you wish to apply to the</span>
 <span class="sd">        trajectory upon reading. Transformations can be found in</span>
@@ -551,6 +583,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_trajectory</span><span class="o">.</span><span class="n">add_transformations</span><span class="p">(</span><span class="o">*</span><span class="n">transformations</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">guess_bonds</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Bond guessing through the `guess_bonds` keyword is deprecated&quot;</span>
+                <span class="s2">&quot; and will be removed in MDAnalysis 3.0. &quot;</span>
+                <span class="s2">&quot;Instead, pass &#39;bonds&#39;, &#39;angles&#39;, and &#39;dihedrals&#39; to &quot;</span>
+                <span class="s2">&quot;the `to_guess` keyword in Universe for guessing these &quot;</span>
+                <span class="s2">&quot;if they are not present, or `force_guess` if they are &quot;</span>
+                <span class="s2">&quot;and you wish to replace these bonds with guessed values. &quot;</span>
+                <span class="s2">&quot;The kwargs `fudge_factor`, `vdwradii`, and `lower_bound` &quot;</span>
+                <span class="s2">&quot;are also deprecated and will be removed in MDAnalysis 3.0, &quot;</span>
+                <span class="s2">&quot;where they should be passed into the Context for guessing on &quot;</span>
+                <span class="s2">&quot;Universe instantiation. If using guess_TopologyAttrs, &quot;</span>
+                <span class="s2">&quot;pass these kwargs to the method instead, as they will override &quot;</span>
+                <span class="s2">&quot;the previous Context values.&quot;</span><span class="p">,</span>
+                <span class="ne">DeprecationWarning</span>
+            <span class="p">)</span>
             <span class="n">force_guess</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">force_guess</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;bonds&#39;</span><span class="p">,</span> <span class="s1">&#39;angles&#39;</span><span class="p">,</span> <span class="s1">&#39;dihedrals&#39;</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">guess_TopologyAttrs</span><span class="p">(</span>

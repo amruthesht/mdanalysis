@@ -224,11 +224,26 @@ they are all to be used, if possible, as coordinate files (employing a
 default behavior is to take the first file as a topology and the
 remaining as coordinates. The first argument will always always be used
 to infer a topology regardless of <em>all_coordinates</em>.</p></li>
-<li><p><strong>guess_bonds</strong> (bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – Once Universe has been loaded, attempt to guess the connectivity
+<li><p><strong>guess_bonds</strong> (bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – <p>Once Universe has been loaded, attempt to guess the connectivity
 between atoms.  This will populate the .bonds, .angles, and .dihedrals
-attributes of the Universe.</p></li>
-<li><p><strong>vdwradii</strong> (dict, <code class="docutils literal notranslate"><span class="pre">None</span></code>, default <code class="docutils literal notranslate"><span class="pre">None</span></code>) – For use with <em>guess_bonds</em>. Supply a dict giving a vdwradii for each
-atom type which are used in guessing bonds.</p></li>
+attributes of the Universe.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.8.0: </span>This keyword is deprecated and will be removed in MDAnalysis 3.0.
+Please pass (“bonds”, “angles”, “dihedrals”) into
+<cite>to_guess</cite> or <cite>force_guess</cite> instead to guess bonds, angles,
+and dihedrals respectively.</p>
+</div>
+</p></li>
+<li><p><strong>vdwradii</strong> (dict, <code class="docutils literal notranslate"><span class="pre">None</span></code>, default <code class="docutils literal notranslate"><span class="pre">None</span></code>) – <p>For use with <em>guess_bonds</em>. Supply a dict giving a vdwradii for each
+atom type which are used in guessing bonds.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.8.0: </span>This keyword is deprecated and will be removed in MDAnalysis 3.0.
+Please pass it into Guesser creation (<code class="xref py py-mod docutils literal notranslate"><span class="pre">guesser</span></code>),
+or to <a class="reference internal" href="#MDAnalysis.core.universe.Universe.guess_TopologyAttrs" title="MDAnalysis.core.universe.Universe.guess_TopologyAttrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">guess_TopologyAttrs()</span></code></a>
+method instead. If passed into <cite>guess_TopologyAttrs</cite>, it will
+override the values set during Guesser creation.</p>
+</div>
+</p></li>
 <li><p><strong>context</strong> (str or <code class="xref py py-mod docutils literal notranslate"><span class="pre">Guesser</span></code>, default <code class="docutils literal notranslate"><span class="pre">'default'</span></code>) – Type of the Guesser to be used in guessing TopologyAttrs</p></li>
 <li><p><strong>to_guess</strong> (list[str] (optional, default <code class="docutils literal notranslate"><span class="pre">['types',</span> <span class="pre">'masses']</span></code>)) – <p>TopologyAttrs to be guessed. These TopologyAttrs will be wholly
 guessed if they don’t exist in the Universe. If they already exist in
@@ -246,23 +261,45 @@ using <code class="docutils literal notranslate"><span class="pre">to_guess</spa
 does not already exist in the Universe, this has no effect. If the
 TopologyAttr does already exist, all values will be overwritten
 by guessed values.</p></li>
-<li><p><strong>fudge_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default</em><em> [</em><em>0.55</em><em>]</em>) – For use with <em>guess_bonds</em>. Supply the factor by which atoms must
-overlap each other to be considered a bond.</p></li>
-<li><p><strong>lower_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default</em><em> [</em><em>0.1</em><em>]</em>) – For use with <em>guess_bonds</em>. Supply the minimum bond length.</p></li>
-<li><p><strong>transformations</strong> (function or list, <code class="docutils literal notranslate"><span class="pre">None</span></code>, default <code class="docutils literal notranslate"><span class="pre">None</span></code>) – Provide a list of transformations that you wish to apply to the
-trajectory upon reading. Transformations can be found in
-<a class="reference internal" href="../trajectory_transformations.html#module-MDAnalysis.transformations" title="MDAnalysis.transformations"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MDAnalysis.transformations</span></code></a>, or can be user-created.</p></li>
-<li><p><strong>in_memory</strong> (bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – After reading in the trajectory, transfer it to an in-memory
-representations, which allow for manipulation of coordinates.</p></li>
-<li><p><strong>in_memory_step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>default 1</em>) – Only read every nth frame into in-memory representation.</p></li>
-<li><p><strong>continuous</strong> (bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – The <cite>continuous</cite> option is used by the
-<a class="reference internal" href="../coordinates/chain.html#module-MDAnalysis.coordinates.chain" title="MDAnalysis.coordinates.chain"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ChainReader</span></code></a>, which contains the
-functionality to treat independent trajectory files as a single virtual
-trajectory.</p></li>
-<li><p><strong>**kwargs</strong> (<em>extra arguments are passed to the topology parser.</em>)</p></li>
+<li><p><strong>fudge_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default</em><em> [</em><em>0.55</em><em>]</em>) – <p>For use with <em>guess_bonds</em>. Supply the factor by which atoms must
+overlap each other to be considered a bond.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.8.0: </span>This keyword is deprecated and will be removed in MDAnalysis 3.0.
+Please pass it into Guesser creation (<code class="xref py py-mod docutils literal notranslate"><span class="pre">guesser</span></code>),
+or to <a class="reference internal" href="#MDAnalysis.core.universe.Universe.guess_TopologyAttrs" title="MDAnalysis.core.universe.Universe.guess_TopologyAttrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">guess_TopologyAttrs()</span></code></a>
+method instead. If passed into <cite>guess_TopologyAttrs</cite>, it will
+override the values set during Guesser creation.</p>
+</div>
+</p></li>
+<li><p><strong>lower_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>default</em><em> [</em><em>0.1</em><em>]</em>) – <p>For use with <em>guess_bonds</em>. Supply the minimum bond length.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.8.0: </span>This keyword is deprecated and will be removed in MDAnalysis 3.0.
+Please pass it into Guesser creation (<code class="xref py py-mod docutils literal notranslate"><span class="pre">guesser</span></code>),
+or to <a class="reference internal" href="#MDAnalysis.core.universe.Universe.guess_TopologyAttrs" title="MDAnalysis.core.universe.Universe.guess_TopologyAttrs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">guess_TopologyAttrs()</span></code></a>
+method instead. If passed into <cite>guess_TopologyAttrs</cite>, it will
+override the values set during Guesser creation.</p>
+</div>
+</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="simple">
+<dt>transformations: function or list, <code class="docutils literal notranslate"><span class="pre">None</span></code>, default <code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>Provide a list of transformations that you wish to apply to the
+trajectory upon reading. Transformations can be found in
+<a class="reference internal" href="../trajectory_transformations.html#module-MDAnalysis.transformations" title="MDAnalysis.transformations"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MDAnalysis.transformations</span></code></a>, or can be user-created.</p>
+</dd>
+<dt>in_memory: bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code></dt><dd><p>After reading in the trajectory, transfer it to an in-memory
+representations, which allow for manipulation of coordinates.</p>
+</dd>
+<dt>in_memory_step: int, default 1</dt><dd><p>Only read every nth frame into in-memory representation.</p>
+</dd>
+<dt>continuous: bool, default <code class="docutils literal notranslate"><span class="pre">False</span></code></dt><dd><p>The <cite>continuous</cite> option is used by the
+<a class="reference internal" href="../coordinates/chain.html#module-MDAnalysis.coordinates.chain" title="MDAnalysis.coordinates.chain"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ChainReader</span></code></a>, which contains the
+functionality to treat independent trajectory files as a single virtual
+trajectory.</p>
+</dd>
+</dl>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: extra arguments are passed to the topology parser.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="MDAnalysis.core.universe.Universe.trajectory">
 <span class="sig-name descname"><span class="pre">trajectory</span></span><a class="headerlink" href="#MDAnalysis.core.universe.Universe.trajectory" title="Link to this definition"></a></dt>

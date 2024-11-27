@@ -375,11 +375,15 @@
 <span class="sd">    :class:`MDAnalysis.auxiliary.base.AuxStep`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_selector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
-                 <span class="n">data_selector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">EDRStep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">time_selector</span><span class="o">=</span><span class="n">time_selector</span><span class="p">,</span>
-                                      <span class="n">data_selector</span><span class="o">=</span><span class="n">data_selector</span><span class="p">,</span>
-                                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">time_selector</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+        <span class="n">data_selector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EDRStep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">time_selector</span><span class="o">=</span><span class="n">time_selector</span><span class="p">,</span> <span class="n">data_selector</span><span class="o">=</span><span class="n">data_selector</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_select_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;Time&#39; is one of the entries in the dict returned by pyedr.</span>
@@ -393,15 +397,17 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; is not a key in the data_dict dictionary.&quot;</span>
-                           <span class="s2">&quot; Check the EDRReader.terms attribute&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39; is not a key in the data_dict dictionary.&quot;</span>
+                <span class="s2">&quot; Check the EDRReader.terms attribute&quot;</span>
+            <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="EDRReader">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/EDR.html#MDAnalysis.auxiliary.EDR.EDRReader">[docs]</a>
 <span class="k">class</span> <span class="nc">EDRReader</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">AuxReader</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Auxiliary reader to read data from an .edr file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Auxiliary reader to read data from an .edr file.</span>
 
 <span class="sd">    `EDR files`_</span>
 <span class="sd">    are created by GROMACS during a simulation. They are binary files which</span>
@@ -457,8 +463,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">convert_units</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">HAS_PYEDR</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;EDRReader: To read EDR files please install &quot;</span>
-                              <span class="s2">&quot;pyedr.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                <span class="s2">&quot;EDRReader: To read EDR files please install &quot;</span> <span class="s2">&quot;pyedr.&quot;</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_auxdata</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span> <span class="o">=</span> <span class="n">pyedr</span><span class="o">.</span><span class="n">edr_to_dict</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unit_dict</span> <span class="o">=</span> <span class="n">pyedr</span><span class="o">.</span><span class="n">get_unit_dictionary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -487,8 +494,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">target_unit</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unit_dict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">MDANALYSIS_BASE_UNITS</span><span class="p">[</span><span class="n">unit_type</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">unknown_units</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Could not find unit type for the following &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;units: </span><span class="si">{</span><span class="n">unknown_units</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Could not find unit type for the following &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;units: </span><span class="si">{</span><span class="n">unknown_units</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_memory_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span>
@@ -512,8 +521,10 @@
         <span class="n">auxstep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span>
         <span class="n">new_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">new_step</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">:</span>
-            <span class="n">auxstep</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span><span class="p">[</span><span class="n">term</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-                             <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">terms</span><span class="p">}</span>
+            <span class="n">auxstep</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">term</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span><span class="p">[</span><span class="n">term</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">terms</span>
+            <span class="p">}</span>
             <span class="n">auxstep</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">new_step</span>
             <span class="k">return</span> <span class="n">auxstep</span>
         <span class="k">else</span><span class="p">:</span>
@@ -522,7 +533,7 @@
                 <span class="k">raise</span> <span class="ne">StopIteration</span>
 
     <span class="k">def</span> <span class="nf">_go_to_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EDRStep</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to and read i-th auxiliary step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to and read i-th auxiliary step.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -539,8 +550,10 @@
 <span class="sd">            If step index not in valid range.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Step index </span><span class="si">{0}</span><span class="s2"> is not valid for auxiliary &quot;</span>
-                             <span class="s2">&quot;(num. steps </span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Step index </span><span class="si">{0}</span><span class="s2"> is not valid for auxiliary &quot;</span>
+                <span class="s2">&quot;(num. steps </span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span>
@@ -548,7 +561,7 @@
 <div class="viewcode-block" id="EDRReader.read_all_times">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/EDR.html#MDAnalysis.auxiliary.EDR.EDRReader.read_all_times">[docs]</a>
     <span class="k">def</span> <span class="nf">read_all_times</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Get list of time at each step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get list of time at each step.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -560,9 +573,10 @@
 
 <div class="viewcode-block" id="EDRReader.get_data">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/EDR.html#MDAnalysis.auxiliary.EDR.EDRReader.get_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_selector</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns the auxiliary data contained in the :class:`EDRReader`.</span>
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data_selector</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the auxiliary data contained in the :class:`EDRReader`.</span>
 <span class="sd">        Returns either all data or data specified as `data_selector` in form</span>
 <span class="sd">        of a str or a list of any of :attr:`EDRReader.terms`. `Time` is</span>
 <span class="sd">        always returned to allow easy plotting.</span>
@@ -590,8 +604,10 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">datadict</span><span class="p">[</span><span class="n">term</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data selector </span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s2"> is invalid. Check the &quot;</span>
-                               <span class="s2">&quot;EDRReader&#39;s `terms` attribute.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;data selector </span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s2"> is invalid. Check the &quot;</span>
+                    <span class="s2">&quot;EDRReader&#39;s `terms` attribute.&quot;</span>
+                <span class="p">)</span>
 
         <span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_dict</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]}</span>
 

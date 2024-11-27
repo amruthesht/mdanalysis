@@ -203,7 +203,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">classdict</span><span class="p">):</span>
         <span class="nb">type</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">classdict</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">fmt</span> <span class="o">=</span> <span class="n">asiterable</span><span class="p">(</span><span class="n">classdict</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">])</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="n">asiterable</span><span class="p">(</span><span class="n">classdict</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">])</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
@@ -258,8 +258,15 @@
 <span class="sd">        Number of the current auxiliary step (0-based).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">initial_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">data_selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant_dt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">initial_time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">time_selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">constant_dt</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">memory_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initial_time</span> <span class="o">=</span> <span class="n">initial_time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dt</span> <span class="o">=</span> <span class="n">dt</span>
@@ -272,7 +279,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Time in ps of current auxiliary step (as float).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Time in ps of current auxiliary step (as float).</span>
 
 <span class="sd">        Read from the set of auxiliary data read each step if time selection</span>
 <span class="sd">        is enabled and a valid ``time_selector`` is specified; otherwise</span>
@@ -284,13 +291,13 @@
             <span class="c1"># default to calculting time...</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_time</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If dt is not constant, must have a valid &quot;</span>
-                             <span class="s2">&quot;time selector&quot;</span><span class="p">)</span>
-
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;If dt is not constant, must have a valid &quot;</span> <span class="s2">&quot;time selector&quot;</span>
+            <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Auxiliary values of interest for the current step (as ndarray).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Auxiliary values of interest for the current step (as ndarray).</span>
 
 <span class="sd">        Read from the full set of data read for each step if data selection is</span>
 <span class="sd">        enabled and a valid ``data_selector`` is specified; otherwise</span>
@@ -303,7 +310,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_time_selector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; &#39;Key&#39; to select time from the full set of data read in each step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;Key&#39; to select time from the full set of data read in each step.</span>
 
 <span class="sd">        Will be passed to ``_select_time()``, defined separately for each</span>
 <span class="sd">        auxiliary format, when returning the time of the current step.</span>
@@ -316,8 +323,10 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_select_time</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support time selection. Reverting to &quot;</span>
-                          <span class="s2">&quot;default&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support time selection. Reverting to &quot;</span>
+                <span class="s2">&quot;default&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_selector_</span>
 
@@ -327,8 +336,11 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_time</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support time selection&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                                                       <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support time selection&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># check *new* is valid before setting; _select_time should raise</span>
             <span class="c1"># an error if not</span>
@@ -337,7 +349,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_data_selector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; &#39;Key&#39; to select values of interest from full set of auxiliary data.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;&#39;Key&#39; to select values of interest from full set of auxiliary data.</span>
 <span class="sd">        These are the values that will be stored in ``data`` (and</span>
 <span class="sd">        ``frame_data`` and ``frame_rep``).</span>
 
@@ -352,8 +364,10 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_select_data</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support data selection. Reverting to &quot;</span>
-                          <span class="s2">&quot;default&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support data selection. Reverting to &quot;</span>
+                <span class="s2">&quot;default&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_selector_</span>
 
@@ -364,7 +378,9 @@
             <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_data</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support data selection&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support data selection&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># check *new* is valid before setting; _select_data should raise an</span>
@@ -373,7 +389,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_selector_</span> <span class="o">=</span> <span class="n">new</span>
 
     <span class="k">def</span> <span class="nf">_empty_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Create an &#39;empty&#39; ``data``-like placeholder.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an &#39;empty&#39; ``data``-like placeholder.</span>
 
 <span class="sd">        Returns an ndarray in the format of ``data`` with all values set to</span>
 <span class="sd">        np.nan; to use at the &#39;representative value&#39; when no auxiliary steps</span>
@@ -444,15 +460,25 @@
 
     <span class="n">_Auxstep</span> <span class="o">=</span> <span class="n">AuxStep</span>
     <span class="c1"># update when add new options</span>
-    <span class="n">represent_options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;closest&#39;</span><span class="p">,</span> <span class="s1">&#39;average&#39;</span><span class="p">]</span>
+    <span class="n">represent_options</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;closest&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">]</span>
 
     <span class="c1"># list of attributes required to recreate the auxiliary</span>
-    <span class="n">required_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;represent_ts_as&#39;</span><span class="p">,</span> <span class="s1">&#39;cutoff&#39;</span><span class="p">,</span> <span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;initial_time&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;time_selector&#39;</span><span class="p">,</span> <span class="s1">&#39;data_selector&#39;</span><span class="p">,</span> <span class="s1">&#39;constant_dt&#39;</span><span class="p">,</span> <span class="s1">&#39;auxname&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="s1">&#39;_auxdata&#39;</span><span class="p">]</span>
+    <span class="n">required_attrs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;represent_ts_as&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cutoff&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;initial_time&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_selector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_selector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;constant_dt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;auxname&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;format&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_auxdata&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">represent_ts_as</span><span class="o">=</span><span class="s1">&#39;closest&#39;</span><span class="p">,</span> <span class="n">auxname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">represent_ts_as</span><span class="o">=</span><span class="s2">&quot;closest&quot;</span><span class="p">,</span> <span class="n">auxname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
         <span class="c1"># allow auxname to be optional for when using reader separate from</span>
         <span class="c1"># trajectory.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxname</span> <span class="o">=</span> <span class="n">auxname</span>
@@ -484,34 +510,34 @@
 
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Number of steps in auxiliary data. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of steps in auxiliary data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span>
 
 <div class="viewcode-block" id="AuxReader.next">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.next">[docs]</a>
     <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to next step of auxiliary data. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to next step of auxiliary data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_next_step</span><span class="p">()</span></div>
 
 
     <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to next step of auxiliary data. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to next step of auxiliary data.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Iterate over all auxiliary steps. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over all auxiliary steps.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_restart</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="k">def</span> <span class="nf">_restart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Reset back to start; calling next() should read first step. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset back to start; calling next() should read first step.&quot;&quot;&quot;</span>
         <span class="c1"># Overwrite as appropriate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
 <div class="viewcode-block" id="AuxReader.rewind">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.rewind">[docs]</a>
     <span class="k">def</span> <span class="nf">rewind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Return to and read first step. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return to and read first step.&quot;&quot;&quot;</span>
         <span class="c1"># Overwrite as appropriate</span>
         <span class="c1">#  could also use _go_to_step(0)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_restart</span><span class="p">()</span>
@@ -519,18 +545,19 @@
 
 
     <span class="k">def</span> <span class="nf">_read_next_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to next step and update auxstep.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to next step and update auxstep.</span>
 
 <span class="sd">        Should return the AuxStep instance corresponding to the next step.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Define in each auxiliary reader</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-            <span class="s2">&quot;BUG: Override _read_next_step() in auxiliary reader!&quot;</span><span class="p">)</span>
+            <span class="s2">&quot;BUG: Override _read_next_step() in auxiliary reader!&quot;</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="AuxReader.update_ts">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.update_ts">[docs]</a>
     <span class="k">def</span> <span class="nf">update_ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Read auxiliary steps corresponding to and update the trajectory</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read auxiliary steps corresponding to and update the trajectory</span>
 <span class="sd">        timestep *ts*.</span>
 
 <span class="sd">        Calls :meth:`read_ts`, then updates *ts* with the representative value.</span>
@@ -559,9 +586,11 @@
 <span class="sd">        :meth:`read_ts`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxname</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Auxiliary name not set, cannot set representative &quot;</span>
-                             <span class="s2">&quot;value in timestep. Name auxiliary or use read_ts &quot;</span>
-                             <span class="s2">&quot;instead&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Auxiliary name not set, cannot set representative &quot;</span>
+                <span class="s2">&quot;value in timestep. Name auxiliary or use read_ts &quot;</span>
+                <span class="s2">&quot;instead&quot;</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read_ts</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">aux</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_rep</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ts</span></div>
@@ -570,7 +599,7 @@
 <div class="viewcode-block" id="AuxReader.read_ts">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.read_ts">[docs]</a>
     <span class="k">def</span> <span class="nf">read_ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Read auxiliary steps corresponding to the trajectory timestep *ts*.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read auxiliary steps corresponding to the trajectory timestep *ts*.</span>
 
 <span class="sd">        Read the auxiliary steps &#39;assigned&#39; to *ts* (the steps that are within</span>
 <span class="sd">        ``ts.dt/2`` of of the trajectory timestep/frame - ie. closer to *ts*</span>
@@ -602,7 +631,7 @@
         <span class="c1"># previous frame, and the next step to either the frame being read or a</span>
         <span class="c1"># following frame. Move to right position if not.</span>
         <span class="n">frame_for_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
-        <span class="n">frame_for_next_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
+        <span class="n">frame_for_next_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">frame_for_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">frame_for_next_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># self.step is the last auxiliary step in memory.</span>
@@ -611,9 +640,9 @@
             <span class="k">elif</span> <span class="ow">not</span> <span class="p">(</span><span class="n">frame_for_step</span> <span class="o">&lt;</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span> <span class="o">&lt;=</span> <span class="n">frame_for_next_step</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">move_to_ts</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_frame_data</span><span class="p">()</span> <span class="c1"># clear previous frame data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_frame_data</span><span class="p">()</span>  <span class="c1"># clear previous frame data</span>
         <span class="c1"># read through all the steps &#39;assigned&#39; to ts.frame + add to frame_data</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span> <span class="o">==</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span> <span class="o">==</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_read_next_step</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_add_step_to_frame_data</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame_rep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_representative</span><span class="p">()</span></div>
@@ -621,11 +650,13 @@
 
 <div class="viewcode-block" id="AuxReader.attach_auxiliary">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.attach_auxiliary">[docs]</a>
-    <span class="k">def</span> <span class="nf">attach_auxiliary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                         <span class="n">coord_parent</span><span class="p">,</span>
-                         <span class="n">aux_spec</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="nb">format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">attach_auxiliary</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">coord_parent</span><span class="p">,</span>
+        <span class="n">aux_spec</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="nb">format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Attaches the data specified in `aux_spec` to the `coord_parent`</span>
 
 <span class="sd">        This method is called from within</span>
@@ -680,12 +711,15 @@
 
         <span class="k">for</span> <span class="n">auxname</span> <span class="ow">in</span> <span class="n">aux_spec</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">auxname</span> <span class="ow">in</span> <span class="n">coord_parent</span><span class="o">.</span><span class="n">aux_list</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Auxiliary data with name </span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2"> already &quot;</span>
-                                 <span class="s2">&quot;exists&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Auxiliary data with name </span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2"> already &quot;</span> <span class="s2">&quot;exists&quot;</span>
+                <span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">auxname</span><span class="p">:</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Auxiliary name &#39;</span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2">&#39; contains a space. &quot;</span>
-                              <span class="s2">&quot;Only dictionary style accession, not attribute &quot;</span>
-                              <span class="sa">f</span><span class="s2">&quot;style accession of &#39;</span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2">&#39; will work.&quot;</span><span class="p">)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Auxiliary name &#39;</span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2">&#39; contains a space. &quot;</span>
+                    <span class="s2">&quot;Only dictionary style accession, not attribute &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;style accession of &#39;</span><span class="si">{</span><span class="n">auxname</span><span class="si">}</span><span class="s2">&#39; will work.&quot;</span>
+                <span class="p">)</span>
             <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">()</span>
             <span class="c1"># make sure kwargs are also used</span>
             <span class="n">description_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">description</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
@@ -702,25 +736,28 @@
 
         <span class="n">aux_memory_usage</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1"># Check if testing, which needs lower memory limit</span>
-        <span class="n">memory_limit</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_limit&quot;</span><span class="p">,</span> <span class="mf">1e+09</span><span class="p">)</span>
+        <span class="n">memory_limit</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_limit&quot;</span><span class="p">,</span> <span class="mf">1e09</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">reader</span> <span class="ow">in</span> <span class="n">coord_parent</span><span class="o">.</span><span class="n">_auxs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">aux_memory_usage</span> <span class="o">+=</span> <span class="n">reader</span><span class="o">.</span><span class="n">_memory_usage</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">aux_memory_usage</span> <span class="o">&gt;</span> <span class="n">memory_limit</span><span class="p">:</span>
-            <span class="n">conv</span> <span class="o">=</span> <span class="mf">1e+09</span>  <span class="c1"># convert to GB</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;AuxReader: memory usage warning! &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;Auxiliary data takes up </span><span class="si">{</span><span class="n">aux_memory_usage</span><span class="o">/</span><span class="n">conv</span><span class="si">}</span><span class="s2"> &quot;</span>
-                          <span class="sa">f</span><span class="s2">&quot;GB of memory (Warning limit: </span><span class="si">{</span><span class="n">memory_limit</span><span class="o">/</span><span class="n">conv</span><span class="si">}</span><span class="s2"> &quot;</span>
-                          <span class="s2">&quot;GB).&quot;</span><span class="p">)</span></div>
+            <span class="n">conv</span> <span class="o">=</span> <span class="mf">1e09</span>  <span class="c1"># convert to GB</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;AuxReader: memory usage warning! &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Auxiliary data takes up </span><span class="si">{</span><span class="n">aux_memory_usage</span><span class="o">/</span><span class="n">conv</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;GB of memory (Warning limit: </span><span class="si">{</span><span class="n">memory_limit</span><span class="o">/</span><span class="n">conv</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="s2">&quot;GB).&quot;</span>
+            <span class="p">)</span></div>
 
 
     <span class="k">def</span> <span class="nf">_memory_usage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;BUG: Override _memory_usage() &quot;</span>
-                                  <span class="s2">&quot;in auxiliary reader!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;BUG: Override _memory_usage() &quot;</span> <span class="s2">&quot;in auxiliary reader!&quot;</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="AuxReader.step_to_frame">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.step_to_frame">[docs]</a>
     <span class="k">def</span> <span class="nf">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">return_time_diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Calculate closest trajectory frame for auxiliary step *step*.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate closest trajectory frame for auxiliary step *step*.</span>
 
 <span class="sd">        Calculated given dt, time and frame from *ts*::</span>
 
@@ -759,13 +796,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">step</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="ow">or</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">time_frame_0</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span><span class="o">*</span><span class="n">ts</span><span class="o">.</span><span class="n">dt</span>  <span class="c1"># assumes ts.dt is constant</span>
+        <span class="n">time_frame_0</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span> <span class="o">*</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span>  <span class="c1"># assumes ts.dt is constant</span>
         <span class="n">time_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_time</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
-        <span class="n">frame_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">time_step</span><span class="o">-</span><span class="n">time_frame_0</span><span class="o">+</span><span class="n">ts</span><span class="o">.</span><span class="n">dt</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span><span class="o">/</span><span class="n">ts</span><span class="o">.</span><span class="n">dt</span><span class="p">))</span>
+        <span class="n">frame_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+            <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">time_step</span> <span class="o">-</span> <span class="n">time_frame_0</span> <span class="o">+</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">return_time_diff</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">frame_index</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">time_frame</span> <span class="o">=</span> <span class="n">time_frame_0</span> <span class="o">+</span> <span class="n">frame_index</span><span class="o">*</span><span class="n">ts</span><span class="o">.</span><span class="n">dt</span>
+            <span class="n">time_frame</span> <span class="o">=</span> <span class="n">time_frame_0</span> <span class="o">+</span> <span class="n">frame_index</span> <span class="o">*</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span>
             <span class="n">time_diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">time_frame</span> <span class="o">-</span> <span class="n">time_step</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">frame_index</span><span class="p">,</span> <span class="n">time_diff</span></div>
 
@@ -773,7 +812,7 @@
 <div class="viewcode-block" id="AuxReader.move_to_ts">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.move_to_ts">[docs]</a>
     <span class="k">def</span> <span class="nf">move_to_ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Position auxiliary reader just before trajectory timestep *ts*.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position auxiliary reader just before trajectory timestep *ts*.</span>
 
 <span class="sd">        Calling ``next()`` should read the first auxiliary step &#39;assigned&#39; to</span>
 <span class="sd">        the trajectory timestep *ts* or, if no auxiliary steps are</span>
@@ -789,16 +828,18 @@
         <span class="c1"># figure out what step we want to end up at</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_dt</span><span class="p">:</span>
             <span class="c1"># if dt constant, calculate from dt/offset/etc</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span><span class="o">-</span><span class="n">ts</span><span class="o">.</span><span class="n">dt</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_time</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">))</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">ts</span><span class="o">.</span><span class="n">time</span> <span class="o">-</span> <span class="n">ts</span><span class="o">.</span><span class="n">dt</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_time</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="c1"># if we&#39;re out of range of the number of steps, reset back</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># otherwise, go through steps till we find the right one</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">ts</span><span class="o">.</span><span class="n">frame</span><span class="p">:</span>
                     <span class="k">break</span>
             <span class="c1"># we want the step before this</span>
-            <span class="n">step</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_restart</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -808,7 +849,7 @@
 <div class="viewcode-block" id="AuxReader.next_nonempty_frame">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.next_nonempty_frame">[docs]</a>
     <span class="k">def</span> <span class="nf">next_nonempty_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Find the next trajectory frame for which a representative auxiliary</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Find the next trajectory frame for which a representative auxiliary</span>
 <span class="sd">        value can be calculated.</span>
 
 <span class="sd">        That is, the next trajectory frame to which one or more auxiliary steps</span>
@@ -833,9 +874,10 @@
 <span class="sd">        The returned index may be out of range for the trajectory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span>
-        <span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">next_frame</span><span class="p">,</span> <span class="n">time_diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span>
-                                                       <span class="n">return_time_diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">next_frame</span><span class="p">,</span> <span class="n">time_diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_to_frame</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">return_time_diff</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">time_diff</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span><span class="p">:</span>
                 <span class="c1"># &#39;representative values&#39; will be NaN; check next step</span>
                 <span class="n">step</span> <span class="o">=</span> <span class="n">step</span> <span class="o">+</span> <span class="mi">1</span>
@@ -846,7 +888,7 @@
 
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Return the AuxStep corresponding to the *i*-th auxiliary step(s)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the AuxStep corresponding to the *i*-th auxiliary step(s)</span>
 <span class="sd">        (0-based). Negative numbers are counted from the end.</span>
 
 <span class="sd">        *i* may be an integer (in which case the corresponding AuxStep is</span>
@@ -878,15 +920,21 @@
             <span class="c1"># default stop to after last frame (i.e. n_steps)</span>
             <span class="c1"># n_steps is a valid stop index but will fail _check_index;</span>
             <span class="c1"># deal with separately</span>
-            <span class="n">stop</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">stop</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">stop</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span>
-                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_index</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">stop</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">stop</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span>
+                <span class="k">else</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_check_index</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">step</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">step</span> <span class="ow">or</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Integral</span><span class="p">)</span> <span class="ow">or</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Step must be positive integer&quot;</span><span class="p">)</span> <span class="c1"># allow -ve?</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Step must be positive integer&quot;</span><span class="p">)</span>  <span class="c1"># allow -ve?</span>
             <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">stop</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;Stop frame is lower than start frame&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_iter</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">step</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_iter</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Index must be integer, list of integers or slice&quot;</span><span class="p">)</span>
 
@@ -896,8 +944,10 @@
         <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is out of range of auxiliary (num. steps &quot;</span>
-                             <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is out of range of auxiliary (num. steps &quot;</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="n">i</span>
 
     <span class="k">def</span> <span class="nf">_list_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
@@ -909,16 +959,17 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_go_to_step</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_go_to_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to and read i-th auxiliary step. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to and read i-th auxiliary step.&quot;&quot;&quot;</span>
         <span class="c1"># Need to define in each auxiliary reader</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-            <span class="s2">&quot;BUG: Override _go_to_step() in auxiliary reader!&quot;</span><span class="p">)</span>
+            <span class="s2">&quot;BUG: Override _go_to_step() in auxiliary reader!&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_reset_frame_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame_data</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">_add_step_to_frame_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts_time</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Update ``frame_data`` with values for the current step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update ``frame_data`` with values for the current step.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -932,7 +983,7 @@
 <div class="viewcode-block" id="AuxReader.calc_representative">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.calc_representative">[docs]</a>
     <span class="k">def</span> <span class="nf">calc_representative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Calculate representative auxiliary value(s) from the data in</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate representative auxiliary value(s) from the data in</span>
 <span class="sd">        *frame_data*.</span>
 
 <span class="sd">        Currently implemented options for calculating representative value are:</span>
@@ -958,14 +1009,17 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">cutoff_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_data</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cutoff_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                           <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span><span class="p">}</span>
+            <span class="n">cutoff_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="n">val</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cutoff</span>
+            <span class="p">}</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cutoff_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c1"># no steps are &#39;assigned&#39; to this trajectory frame, so return</span>
             <span class="c1"># values of ``np.nan``</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">_empty_data</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_ts_as</span> <span class="o">==</span> <span class="s1">&#39;closest&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_ts_as</span> <span class="o">==</span> <span class="s2">&quot;closest&quot;</span><span class="p">:</span>
             <span class="n">min_diff</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cutoff_data</span><span class="p">])</span>
             <span class="c1"># we don&#39;t know the original sign, and might have two equally-spaced</span>
             <span class="c1"># steps; check the earlier time first</span>
@@ -973,11 +1027,11 @@
                 <span class="n">value</span> <span class="o">=</span> <span class="n">cutoff_data</span><span class="p">[</span><span class="o">-</span><span class="n">min_diff</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">cutoff_data</span><span class="p">[</span><span class="n">min_diff</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_ts_as</span> <span class="o">==</span> <span class="s1">&#39;average&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_ts_as</span> <span class="o">==</span> <span class="s2">&quot;average&quot;</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-                                <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cutoff_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-                                <span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cutoff_data</span><span class="o">.</span><span class="n">values</span><span class="p">()]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+                <span class="p">)</span>
             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
                 <span class="c1"># for readers like EDRReader, the above does not work</span>
                 <span class="c1"># because each step contains a dictionary of numpy arrays</span>
@@ -1004,7 +1058,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">n_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Total number of steps in the auxiliary data. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of steps in the auxiliary data.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_steps</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -1014,7 +1068,7 @@
 <div class="viewcode-block" id="AuxReader.step_to_time">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.step_to_time">[docs]</a>
     <span class="k">def</span> <span class="nf">step_to_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Return time of auxiliary step *i*.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return time of auxiliary step *i*.</span>
 
 <span class="sd">        Calculated using ``dt`` and ``initial_time`` if ``constant_dt`` is True;</span>
 <span class="sd">        otherwise from the list of times as read from the auxiliary data for</span>
@@ -1036,10 +1090,12 @@
 <span class="sd">            When *i* not in valid range</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid step index (total number of &quot;</span>
-                             <span class="s2">&quot;steps is </span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid step index (total number of &quot;</span>
+                <span class="s2">&quot;steps is </span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant_dt</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">i</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_time</span>
+            <span class="k">return</span> <span class="n">i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_time</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -1050,7 +1106,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">represent_ts_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Method by which &#39;representative&#39; timestep values of auxiliary data</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Method by which &#39;representative&#39; timestep values of auxiliary data</span>
 <span class="sd">        will be calculated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_represent_ts_as</span>
@@ -1058,11 +1114,12 @@
     <span class="nd">@represent_ts_as</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">represent_ts_as</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">new</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_options</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid option for calculating &quot;</span>
-                             <span class="s2">&quot;representative value(s). Enabled options are: &quot;</span>
-                             <span class="s2">&quot;</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_options</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> is not a valid option for calculating &quot;</span>
+                <span class="s2">&quot;representative value(s). Enabled options are: &quot;</span>
+                <span class="s2">&quot;</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">represent_options</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_represent_ts_as</span> <span class="o">=</span> <span class="n">new</span>
-
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1070,7 +1127,7 @@
 <div class="viewcode-block" id="AuxReader.get_description">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxReader.get_description">[docs]</a>
     <span class="k">def</span> <span class="nf">get_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Get the values of the parameters necessary for replicating the</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the values of the parameters necessary for replicating the</span>
 <span class="sd">        AuxReader.</span>
 
 <span class="sd">        An AuxReader can be duplicated using</span>
@@ -1091,8 +1148,10 @@
 <span class="sd">            Key-word arguments and values that can be used to replicate the</span>
 <span class="sd">            AuxReader.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">description</span> <span class="o">=</span> <span class="p">{</span><span class="n">attr</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
-                       <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_attrs</span><span class="p">}</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">attr</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_attrs</span>
+        <span class="p">}</span>
         <span class="k">return</span> <span class="n">description</span></div>
 
 
@@ -1146,7 +1205,7 @@
             <span class="c1"># if constant_dt is False and so we&#39;re using a _times list, this will</span>
             <span class="c1"># now be made invalid</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">del</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_times</span><span class="p">)</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_times</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
 
@@ -1171,8 +1230,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">constant_dt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; True if ``dt`` is constant throughout the auxiliary (as stored in</span>
-<span class="sd">        ``auxstep``) &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;True if ``dt`` is constant throughout the auxiliary (as stored in</span>
+<span class="sd">        ``auxstep``)&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">_constant_dt</span>
 
     <span class="nd">@constant_dt</span><span class="o">.</span><span class="n">setter</span>
@@ -1184,7 +1243,7 @@
 <div class="viewcode-block" id="AuxFileReader">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxFileReader">[docs]</a>
 <span class="k">class</span> <span class="nc">AuxFileReader</span><span class="p">(</span><span class="n">AuxReader</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Base class for auxiliary readers that read from file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for auxiliary readers that read from file.</span>
 
 <span class="sd">    Extends AuxReader with attributes and methods particular to reading</span>
 <span class="sd">    auxiliary data from an open file, for use when auxiliary files may be too</span>
@@ -1216,7 +1275,7 @@
 <div class="viewcode-block" id="AuxFileReader.close">
 <a class="viewcode-back" href="../../../documentation_pages/auxiliary/base.html#MDAnalysis.auxiliary.base.AuxFileReader.close">[docs]</a>
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Close *auxfile*. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Close *auxfile*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1224,19 +1283,19 @@
 
 
     <span class="k">def</span> <span class="nf">_restart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Reposition to just before first step. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reposition to just before first step.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_reopen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Close and then reopen *auxfile*. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Close and then reopen *auxfile*.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_auxdata</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auxstep</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_go_to_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; Move to and read i-th auxiliary step.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to and read i-th auxiliary step.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1255,8 +1314,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">## could seek instead?</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Step index </span><span class="si">{0}</span><span class="s2"> is not valid for auxiliary &quot;</span>
-                             <span class="s2">&quot;(num. steps </span><span class="si">{1}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Step index </span><span class="si">{0}</span><span class="s2"> is not valid for auxiliary &quot;</span>
+                <span class="s2">&quot;(num. steps </span><span class="si">{1}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_steps</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewind</span><span class="p">()</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>

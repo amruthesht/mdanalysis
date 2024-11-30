@@ -186,7 +186,7 @@
 <span class="k">class</span> <span class="nc">wrap</span><span class="p">(</span><span class="n">TransformationBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shift the contents of a given AtomGroup back into the unit cell. ::</span>
-<span class="sd">    </span>
+
 <span class="sd">       +-----------+          +-----------+</span>
 <span class="sd">       |           |          |           |</span>
 <span class="sd">       |         3 | 6        | 6       3 |</span>
@@ -196,24 +196,24 @@
 <span class="sd">       |         4 | 7        | 7       4 |</span>
 <span class="sd">       |           |          |           |</span>
 <span class="sd">       +-----------+          +-----------+</span>
-<span class="sd">    </span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">        </span>
-<span class="sd">        ag = u.atoms </span>
+
+<span class="sd">        ag = u.atoms</span>
 <span class="sd">        transform = mda.transformations.wrap(ag)</span>
 <span class="sd">        u.trajectory.add_transformations(transform)</span>
-<span class="sd">        </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    </span>
+
 <span class="sd">    ag: Atomgroup</span>
 <span class="sd">        Atomgroup to be wrapped in the unit cell</span>
 <span class="sd">    compound : {&#39;atoms&#39;, &#39;group&#39;, &#39;residues&#39;, &#39;segments&#39;, &#39;fragments&#39;}, optional</span>
 <span class="sd">        The group which will be kept together through the shifting process.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    When specifying a `compound`, the translation is calculated based on</span>
@@ -221,7 +221,7 @@
 <span class="sd">    within this compound, meaning it will not be broken by the shift.</span>
 <span class="sd">    This might however mean that not all atoms from the compound are</span>
 <span class="sd">    inside the unit cell, but rather the center of the compound is.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    MDAnalysis.coordinates.timestep.Timestep</span>
@@ -234,10 +234,13 @@
 <span class="sd">       The transformation was changed to inherit from the base class for</span>
 <span class="sd">       limiting threads and checking if it can be used in parallel analysis.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ag</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="s1">&#39;atoms&#39;</span><span class="p">,</span>
-                 <span class="n">max_threads</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parallelizable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">max_threads</span><span class="o">=</span><span class="n">max_threads</span><span class="p">,</span>
-                         <span class="n">parallelizable</span><span class="o">=</span><span class="n">parallelizable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">ag</span><span class="p">,</span> <span class="n">compound</span><span class="o">=</span><span class="s2">&quot;atoms&quot;</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parallelizable</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">max_threads</span><span class="o">=</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">parallelizable</span><span class="o">=</span><span class="n">parallelizable</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ag</span> <span class="o">=</span> <span class="n">ag</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compound</span> <span class="o">=</span> <span class="n">compound</span>
@@ -260,7 +263,7 @@
 <span class="sd">    unit cell, causing breaks mid molecule, with the molecule then appearing</span>
 <span class="sd">    on either side of the unit cell. This is problematic for operations</span>
 <span class="sd">    such as calculating the center of mass of the molecule. ::</span>
-<span class="sd">    </span>
+
 <span class="sd">       +-----------+     +-----------+</span>
 <span class="sd">       |           |     |           |</span>
 <span class="sd">       | 6       3 |     |         3 | 6</span>
@@ -270,22 +273,22 @@
 <span class="sd">       | 7       4 |     |         4 | 7</span>
 <span class="sd">       |           |     |           |</span>
 <span class="sd">       +-----------+     +-----------+</span>
-<span class="sd">    </span>
+
 <span class="sd">    Example</span>
 <span class="sd">    -------</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">        </span>
-<span class="sd">        ag = u.atoms </span>
+
+<span class="sd">        ag = u.atoms</span>
 <span class="sd">        transform = mda.transformations.unwrap(ag)</span>
 <span class="sd">        u.trajectory.add_transformations(transform)</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    atomgroup : AtomGroup</span>
 <span class="sd">        The :class:`MDAnalysis.core.groups.AtomGroup` to work with.</span>
 <span class="sd">        The positions of this are modified in place.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    MDAnalysis.coordinates.timestep.Timestep</span>
@@ -298,9 +301,11 @@
 <span class="sd">       The transformation was changed to inherit from the base class for</span>
 <span class="sd">       limiting threads and checking if it can be used in parallel analysis.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ag</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parallelizable</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">max_threads</span><span class="o">=</span><span class="n">max_threads</span><span class="p">,</span>
-                         <span class="n">parallelizable</span><span class="o">=</span><span class="n">parallelizable</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">max_threads</span><span class="o">=</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">parallelizable</span><span class="o">=</span><span class="n">parallelizable</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ag</span> <span class="o">=</span> <span class="n">ag</span>
 

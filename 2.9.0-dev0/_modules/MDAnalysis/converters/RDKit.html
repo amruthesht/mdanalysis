@@ -512,9 +512,12 @@
 
         <span class="c1"># add a conformer for the current Timestep</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ag</span><span class="p">,</span> <span class="s2">&quot;positions&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ag</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;NaN detected in coordinates, the output &quot;</span>
-                              <span class="s2">&quot;molecule will not have 3D coordinates assigned&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ag</span><span class="o">.</span><span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span>
+                <span class="n">ag</span><span class="o">.</span><span class="n">positions</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-12</span>
+            <span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;NaN or empty coordinates detected in coordinates, &quot;</span>
+                              <span class="s2">&quot;the output molecule will not have 3D coordinates &quot;</span>
+                              <span class="s2">&quot;assigned&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># assign coordinates</span>
                 <span class="n">conf</span> <span class="o">=</span> <span class="n">Chem</span><span class="o">.</span><span class="n">Conformer</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">GetNumAtoms</span><span class="p">())</span>

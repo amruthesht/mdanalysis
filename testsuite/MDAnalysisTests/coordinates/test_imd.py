@@ -22,7 +22,7 @@ if HAS_IMDCLIENT:
     )
     from imdclient.tests.server import InThreadIMDServer
 
-from MDAanalysis.coordinates.IMD import IMDReader
+from MDAnalysis.coordinates.IMD import IMDReader
 
 from MDAnalysisTests.datafiles import (
     COORDINATES_TOPOLOGY,
@@ -646,7 +646,7 @@ class TestStreamIteration:
             for ts in sub_sliced_reader:
                 pass
 
-
+@pytest.mark.skipif(not HAS_IMDCLIENT, reason="IMDClient not installed")
 def test_n_atoms_mismatch():
     universe = mda.Universe(COORDINATES_TOPOLOGY, COORDINATES_H5MD)
     port = get_free_port()

@@ -82,6 +82,8 @@ inputs:
     default: 'seaborn>=0.7.0'
   tidynamics:
     default: 'tidynamics>=1.0.0'
+  imdclient:
+    default: 'imdclient'
   # pip-installed min dependencies
   coverage:
     default: 'coverage'
@@ -131,6 +133,7 @@ runs:
           ${{ inputs.distopia }}
           ${{ inputs.gsd }}
           ${{ inputs.h5py }}
+          ${{ inputs.imdclient }}
           ${{ inputs.hole2 }}
           ${{ inputs.joblib }}
           ${{ inputs.netcdf4 }}

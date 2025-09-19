@@ -1,6 +1,5 @@
 name: mda-dev
 channels:
-  - defaults
   - conda-forge
 dependencies:
   - chemfiles>=0.10
@@ -31,6 +30,7 @@ dependencies:
   - sphinxcontrib-bibtex
   - mdaencore
   - waterdynamics
+  - imdclient>=0.2.2
   - pip:
       - mdahole2
       - pathsimanalysis
